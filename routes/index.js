@@ -26,11 +26,9 @@ router.post("/movies", async (req, res) => {
           genres: data.genres,
           href: data.href,
           extract: data.extract,
-          thumbnail: {
-            url: data.thumbnail,
-            width: data.thumbnail_width,
-            height: data.thumbnail_height,
-          },
+          thumbnail: data.thumbnail,
+          thumbnail_width: data.thumbnail_width,
+          thumbnail_height: data.thumbnail_height,
         };
 
         const newMovie = new MovieModel(newMovieData);
@@ -101,7 +99,6 @@ router.get("/movies/search", async (req, res) => {
 // Route to get Action movies
 router.get("/movies/action", async (req, res) => {
   try {
-    // Query the database to find movies with "Action" genre
     const actionMovies = await MovieModel.find({ genres: "Action" });
 
     res.status(200).json({
@@ -119,7 +116,6 @@ router.get("/movies/action", async (req, res) => {
 // Route to get Animated movies
 router.get("/movies/animated", async (req, res) => {
   try {
-    // Query the database to find movies with "Animated" genre
     const animatedMovies = await MovieModel.find({ genres: "Animated" });
 
     res.status(200).json({
@@ -138,7 +134,6 @@ router.get("/movies/animated", async (req, res) => {
 // Route to get Horror and Thriller movies
 router.get("/movies/horrorthriller", async (req, res) => {
   try {
-    // Query the database to find movies with "Horror" or "Thriller" genre
     const horrorThrillerMovies = await MovieModel.find({
       genres: { $in: ["Horror", "Thriller"] },
     });
@@ -159,7 +154,6 @@ router.get("/movies/horrorthriller", async (req, res) => {
 // Route to get Romance movies
 router.get("/movies/romance", async (req, res) => {
   try {
-    // Query the database to find movies with "Romance" genre
     const romanceMovies = await MovieModel.find({ genres: "Romance" });
 
     res.status(200).json({

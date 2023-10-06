@@ -9,33 +9,15 @@ const movieSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  cast: [
-    {
-      type: String,
-    },
-  ],
-  genres: [
-    {
-      type: String,
-    },
-  ],
-  href: {
-    type: String,
-  },
-  extract: {
-    type: String,
-  },
-  thumbnail: {
-    url: String,
-  },
-  thumbnail_width: {
-    type: Number,
-  },
-  thumbnail_height: {
-    type: Number,
-  },
+  cast: [String],
+  genres: [String],
+  href: String,
+  extract: String,
+  thumbnail: String,
+  thumbnail_width: Number,
+  thumbnail_height: Number,
 });
 
-const MovieModel = mongoose.model("Movie", movieSchema);
+const MovieModel = mongoose.model("movies", movieSchema);
 
 module.exports = MovieModel;
