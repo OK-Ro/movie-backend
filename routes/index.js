@@ -113,6 +113,31 @@ router.get("/movies/search", async (req, res) => {
   }
 });
 
+// Route to retrieve movie details by ID
+router.get("/movies/:id/information", async (req, res) => {
+  try {
+    const movieId = req.params.id;
+
+    const movieDetails = await MovieModel.findById(movieId);
+
+    if (!movieDetails) {
+      return res.status(404).json({
+        message: "Movie details not found.",
+      });
+    }
+
+    res.status(200).json({
+      message: "Movie details retrieved successfully.",
+      details: movieDetails,
+    });
+  } catch (error) {
+    console.error("Error retrieving movie details:", error);
+    res.status(500).json({
+      message: "Unable to retrieve movie details",
+      error: error.message,
+    });
+  }
+});
 // Route to get Action movies
 router.get("/movies/action", async (req, res) => {
   try {
