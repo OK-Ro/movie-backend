@@ -55,6 +55,23 @@ router.post("/movies", async (req, res) => {
   }
 });
 
+// Route to retrieve all movies
+router.get("/movies", async (req, res) => {
+  try {
+    const allMovies = await MovieModel.find();
+    res.status(200).json({
+      message: "All movies retrieved successfully.",
+      movies: allMovies,
+    });
+  } catch (error) {
+    console.error("Error retrieving movies:", error);
+    res.status(500).json({
+      message: "Unable to retrieve movies",
+      error: error.message,
+    });
+  }
+});
+
 // Route to search for movies by title, genre, year, or cast
 router.get("/movies/search", async (req, res) => {
   try {
