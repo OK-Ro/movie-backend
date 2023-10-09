@@ -113,6 +113,62 @@ router.get("/movies/search", async (req, res) => {
   }
 });
 
+// Route to get comedy movies
+router.get("/movies/comedy", async (req, res) => {
+  try {
+    const comedyMovies = await MovieModel.find({ genres: "Comedy" });
+
+    if (comedyMovies.length === 0) {
+      res.status(404).json({ message: "No comedy movies found" });
+    } else {
+      res.status(200).json({ comedyMovies });
+    }
+  } catch (error) {
+    console.error("Error getting comedy movies:", error);
+    res
+      .status(500)
+      .json({ message: "Unable to get comedy movies", error: error.message });
+  }
+});
+
+// Route to get Science Fiction movies
+router.get("/movies/science-fiction", async (req, res) => {
+  try {
+    const releaseYear = req.query.year || 2023; // Default to 2023 if year is not provided
+    const scienceFictionMovies = await MovieModel.find({
+      genres: "Science Fiction",
+      year: releaseYear,
+    });
+    res.status(200).json({ movies: scienceFictionMovies });
+  } catch (error) {
+    console.error("Error getting Science Fiction movies:", error);
+    res.status(500).json({
+      message: "Unable to retrieve Science Fiction movies",
+      error: error.message,
+    });
+  }
+});
+
+// Route to get Adventure movies in 2023
+router.get("/movies/Adventure/2023", async (req, res) => {
+  try {
+    const adventureMovies = await MovieModel.find({
+      genres: "Adventure",
+      year: 2023,
+    });
+
+    res.status(200).json({ movies: adventureMovies });
+  } catch (error) {
+    console.error("Error fetching Adventure movies:", error);
+    res
+      .status(500)
+      .json({
+        message: "Unable to fetch Adventure movies",
+        error: error.message,
+      });
+  }
+});
+
 // Route to retrieve movie details by ID
 router.get("/movies/:id/information", async (req, res) => {
   try {
