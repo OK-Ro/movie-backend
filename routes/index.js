@@ -112,32 +112,60 @@ router.get("/movies/search", async (req, res) => {
       .json({ message: "Unable to search for movies", error: error.message });
   }
 });
-
-// Route to get comedy movies
+// Route to get all comedy movies
 router.get("/movies/comedy", async (req, res) => {
   try {
-    const comedyMovies = await MovieModel.find({ genres: "Comedy" });
+    const comedyMovies = await MovieModel.find({
+      genres: "Comedy",
+    });
 
-    if (comedyMovies.length === 0) {
-      res.status(404).json({ message: "No comedy movies found" });
-    } else {
-      res.status(200).json({ comedyMovies });
-    }
+    res.status(200).json(comedyMovies);
   } catch (error) {
-    console.error("Error getting comedy movies:", error);
-    res
-      .status(500)
-      .json({ message: "Unable to get comedy movies", error: error.message });
+    console.error("Error retrieving comedy movies:", error);
+    res.status(500).json({
+      message: "Unable to retrieve comedy movies",
+      error: error.message,
+    });
+  }
+});
+
+// Route to get Drama movies
+router.get("/movies/drama", async (req, res) => {
+  try {
+    const dramaMovies = await MovieModel.find({
+      genres: "Drama",
+    });
+    res.status(200).json({ movies: dramaMovies });
+  } catch (error) {
+    console.error("Error getting Drama movies:", error);
+    res.status(500).json({
+      message: "Unable to retrieve Drama movies",
+      error: error.message,
+    });
+  }
+});
+
+// Route to get Sports movies
+router.get("/movies/sports", async (req, res) => {
+  try {
+    const sportsMovies = await MovieModel.find({
+      genres: "Sports",
+    });
+    res.status(200).json({ movies: sportsMovies });
+  } catch (error) {
+    console.error("Error getting Sports movies:", error);
+    res.status(500).json({
+      message: "Unable to retrieve Sports movies",
+      error: error.message,
+    });
   }
 });
 
 // Route to get Science Fiction movies
 router.get("/movies/science-fiction", async (req, res) => {
   try {
-    const releaseYear = req.query.year || 2023; // Default to 2023 if year is not provided
     const scienceFictionMovies = await MovieModel.find({
       genres: "Science Fiction",
-      year: releaseYear,
     });
     res.status(200).json({ movies: scienceFictionMovies });
   } catch (error) {
@@ -149,23 +177,20 @@ router.get("/movies/science-fiction", async (req, res) => {
   }
 });
 
-// Route to get Adventure movies in 2023
-router.get("/movies/Adventure/2023", async (req, res) => {
+// Route to get all Adventure movies
+router.get("/movies/Adventure", async (req, res) => {
   try {
     const adventureMovies = await MovieModel.find({
       genres: "Adventure",
-      year: 2023,
     });
 
     res.status(200).json({ movies: adventureMovies });
   } catch (error) {
     console.error("Error fetching Adventure movies:", error);
-    res
-      .status(500)
-      .json({
-        message: "Unable to fetch Adventure movies",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Unable to fetch Adventure movies",
+      error: error.message,
+    });
   }
 });
 
